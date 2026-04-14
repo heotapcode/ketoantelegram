@@ -52,6 +52,7 @@ Chú ý:
 - Nếu không tìm thấy tên nhà cung cấp, để null.
 - Số lượng và đơn giá phải là số.
 - Tên mặt hàng cần chuẩn hóa (viết hoa chữ cái đầu, bỏ các ký hiệu thừa).
+- Đơn vị tính (unit): Nếu không thấy ghi rõ, hãy cố gắng dự đoán dựa trên mặt hàng (VD: thép -> Kg, bia -> Thùng/Lon, linh kiện -> Cái). Mặc định nếu không đoán được là "Cái".
 """
 
 @router.message(F.photo | (F.document.mime_type.startswith("image/")) | (F.document.mime_type == "application/pdf"))
@@ -166,11 +167,12 @@ async def confirm_invoice_process(callback: CallbackQuery, state: FSMContext, se
             if not match:
                 # Mặc định gán vào nhóm HH (Hàng hóa) hoặc tự đoán
                 category_code = "HH" 
+                unit = item.get("unit") or "Cái"  # Default unit if missing
                 match = await create_material(
                     session, 
                     name=item["name"], 
                     category_code=category_code, 
-                    unit=item["unit"],
+                    unit=unit,
                     cost_price=item["price"]
                 )
             
