@@ -8,6 +8,7 @@ load_dotenv()
 
 # Telegram Bot
 BOT_TOKEN = os.getenv("BOT_TOKEN", "")
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
 
 # Database
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite+aiosqlite:///./accounting.db")

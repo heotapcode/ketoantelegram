@@ -22,6 +22,7 @@ from handlers.material import router as material_router
 from handlers.inventory import router as inventory_router
 from handlers.partner import router as partner_router
 from handlers.report import router as report_router
+from handlers.invoice import router as invoice_router
 
 
 # Logging
@@ -83,6 +84,7 @@ async def main():
     dp.include_router(inventory_router)
     dp.include_router(partner_router)
     dp.include_router(report_router)
+    dp.include_router(invoice_router)
 
     # Startup hook
     dp.startup.register(on_startup)
